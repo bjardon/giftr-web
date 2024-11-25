@@ -10,6 +10,7 @@ import { provideRouterStore } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { AuthReducer, AuthEffects, AuthRouterEffects } from './auth/store';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -28,8 +29,8 @@ export const appConfig: ApplicationConfig = {
         ),
         provideAuth(() => getAuth()),
         provideRouter(routes),
-        provideStore(),
-        provideEffects(),
+        provideStore({ auth: AuthReducer }),
+        provideEffects([AuthEffects, AuthRouterEffects]),
         provideRouterStore(),
         provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     ],
