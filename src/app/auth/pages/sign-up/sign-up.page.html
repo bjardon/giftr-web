@@ -1,0 +1,54 @@
+<div class="card border-0 shadow-lg rounded-lg" *ngrxLet="busy$ as busy">
+    <div class="card-body">
+        <h2 class="card-title">Sign Up</h2>
+        <h3 class="card-subtitle mb-3 text-body-secondary">
+            with your email and password
+        </h3>
+        <p class="mb-4">
+            Already have an account?
+            <a routerLink="/auth/sign-in" class="link-primary">Sign in</a>
+            instead
+        </p>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="mb-4" [formGroup]="form">
+                <div class="form-floating mb-3">
+                    <input
+                        formControlName="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="name@example.com" />
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input
+                        formControlName="password"
+                        type="password"
+                        class="form-control"
+                        placeholder="Password" />
+                    <label for="password">Password</label>
+                </div>
+                <div class="form-check text-start">
+                    <input
+                        formControlName="acceptTos"
+                        class="form-check-input"
+                        type="checkbox" />
+                    <label class="form-check-label" for="acceptTos">
+                        I have read and accept the ToS
+                    </label>
+                </div>
+            </div>
+            <div
+                class="d-grid d-md-flex gap-3 justify-content-md-end align-items-center">
+                <p *ngrxLet="error$ as error" class="mb-0 text-danger">
+                    {{error}}
+                </p>
+                <button
+                    type="submit"
+                    class="btn btn-lg btn-primary px-5"
+                    [disabled]="busy">
+                    Sign up
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
