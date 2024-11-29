@@ -11,14 +11,17 @@ import {
     user,
     UserCredential,
 } from '@angular/fire/auth';
-import { defer, Observable } from 'rxjs';
+import { defer, map, Observable } from 'rxjs';
 import { authState } from '@angular/fire/auth';
+import { Store } from '@ngrx/store';
+import { UserActions } from '../../user/store';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     private readonly firebaseAuth: Auth = inject(Auth);
+    private readonly store: Store = inject(Store);
 
     /**
      * Observable that emits authentication changes such as a logged out or logged in state
@@ -41,6 +44,12 @@ export class AuthService {
      * @type {Observable<string | null>}
      */
     idToken$: Observable<string | null> = idToken(this.firebaseAuth);
+
+    constructor() {
+        this.authState$
+            .pipe(map(() => this.store.dispatch(UserActions.fetchUser())))
+            .subscribe();
+    }
 
     signUpWithEmailAndPassword(
         email: string,
