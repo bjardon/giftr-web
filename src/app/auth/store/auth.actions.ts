@@ -1,38 +1,42 @@
 import { createAction, props } from '@ngrx/store';
 
-export interface AuthLoginActionParams {
+export interface AuthSignInParams {
     email: string;
     password: string;
 }
 
-export interface AuthSignUpActionParams {
+export interface AuthSignUpParams {
     email: string;
     password: string;
 }
 
 const signIn = createAction(
-    '[Auth] login',
-    props<{ params: AuthLoginActionParams }>(),
+    '[Auth] signIn',
+    props<{ params: AuthSignInParams }>(),
 );
 const signInSuccess = createAction(
-    '[Auth] loginSuccess',
+    '[Auth] signInSuccess',
     props<{ success: true }>(),
 );
 const signInError = createAction(
-    '[Auth] loginError',
+    '[Auth] signInError',
     props<{ error: unknown }>(),
 );
 
 const signUp = createAction(
     '[Auth] signUp',
-    props<{ params: AuthSignUpActionParams }>(),
+    props<{ params: AuthSignUpParams }>(),
 );
-const signUpSuccess = createAction(
-    '[Auth] signUpSuccess',
-    props<{ success: true }>(),
-);
+const signUpSuccess = createAction('[Auth] signUpSuccess');
 const signUpError = createAction(
     '[Auth] signUpError',
+    props<{ error: unknown }>(),
+);
+
+const refreshToken = createAction('[Auth] refreshToken');
+const refreshTokenSuccess = createAction('[Auth] refreshTokenSuccess');
+const refreshTokenError = createAction(
+    '[Auth] refreshTokenError',
     props<{ error: unknown }>(),
 );
 
@@ -50,6 +54,9 @@ export const AuthActions = {
     signUp,
     signUpSuccess,
     signUpError,
+    refreshToken,
+    refreshTokenSuccess,
+    refreshTokenError,
     signOut,
     signOutSuccess,
     signOutError,

@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap } from 'rxjs';
+import { routerNavigatedAction } from '@ngrx/router-store';
+import { map, tap } from 'rxjs';
 import { AuthActions } from './auth.actions';
 
 @Injectable()
@@ -38,4 +39,11 @@ export class AuthRouterEffects {
         },
         { dispatch: false },
     );
+
+    refreshTokenOnNavigate$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(routerNavigatedAction),
+            map(() => AuthActions.refreshToken()),
+        );
+    });
 }

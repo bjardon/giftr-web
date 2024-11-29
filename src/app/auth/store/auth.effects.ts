@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
-import { AuthService } from '../services';
+import { catchError, map, of, switchMap, withLatestFrom } from 'rxjs';
 import { AuthActions } from './auth.actions';
+import { AuthService } from '../services';
 
 @Injectable()
 export class AuthEffects {
@@ -25,6 +25,22 @@ export class AuthEffects {
         );
     });
 
+    refreshToken$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.refreshToken),
+            // eslint-disable-next-line @ngrx/prefer-concat-latest-from
+            withLatestFrom(this.auth.user$),
+            switchMap(([, user]) =>
+                this.auth.refreshToken(user).pipe(
+                    map(() => AuthActions.refreshTokenSuccess()),
+                    catchError((error) =>
+                        of(AuthActions.refreshTokenError({ error })),
+                    ),
+                ),
+            ),
+        );
+    });
+
     signUp$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.signUp),
@@ -32,7 +48,7 @@ export class AuthEffects {
                 this.auth
                     .signUpWithEmailAndPassword(params.email, params.password)
                     .pipe(
-                        map(() => AuthActions.signUpSuccess({ success: true })),
+                        map(() => AuthActions.signUpSuccess()),
                         catchError((error) =>
                             of(AuthActions.signUpError({ error })),
                         ),
