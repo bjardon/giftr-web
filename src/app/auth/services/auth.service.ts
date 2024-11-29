@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import {
     Auth,
     createUserWithEmailAndPassword,
+    getIdToken,
     idToken,
     signInAnonymously,
     signInWithEmailAndPassword,
@@ -61,6 +62,10 @@ export class AuthService {
 
     signInAnonymously(): Observable<UserCredential> {
         return defer(() => signInAnonymously(this.firebaseAuth));
+    }
+
+    refreshToken(user: User) {
+        return defer(() => getIdToken(user));
     }
 
     signOut(): Observable<void> {
