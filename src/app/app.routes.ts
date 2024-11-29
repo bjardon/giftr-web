@@ -5,8 +5,10 @@ import {
     redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
 import { AuthPage, SignInPage, SignUpPage } from './auth/pages';
+import { HubPage } from './hub/pages';
 
 export const routes: Routes = [
+    { path: '', pathMatch: 'full', redirectTo: 'hub' },
     {
         path: 'auth',
         component: AuthPage,
@@ -18,5 +20,12 @@ export const routes: Routes = [
             { path: 'sign-in', component: SignInPage },
             { path: 'sign-up', component: SignUpPage },
         ],
+    },
+    {
+        path: 'hub',
+        component: HubPage,
+        data: { authGuardPipe: () => redirectUnauthorizedTo('/auth') },
+        canActivate: [AuthGuard],
+        children: [],
     },
 ];
