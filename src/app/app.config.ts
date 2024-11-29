@@ -10,23 +10,14 @@ import { provideRouterStore } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { environment } from '../environments/environment';
 import { AuthReducer, AuthEffects, AuthRouterEffects } from './auth/store';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideZoneChangeDetection({ eventCoalescing: true }),
-        provideFirebaseApp(() =>
-            initializeApp({
-                projectId: 'giftr-46af7',
-                appId: '1:179695453416:web:1e55197309e011d22c355d',
-                storageBucket: 'giftr-46af7.firebasestorage.app',
-                apiKey: 'AIzaSyCWPSPOWZc9tmAOY7_SS7lPqONBFhrWbl8',
-                authDomain: 'giftr-46af7.firebaseapp.com',
-                messagingSenderId: '179695453416',
-                measurementId: 'G-FDCMKX8PH2',
-            }),
-        ),
+        provideFirebaseApp(() => initializeApp(environment.firebaseOptions)),
         provideAuth(() => getAuth()),
         provideRouter(routes),
         provideStore({ auth: AuthReducer }),
