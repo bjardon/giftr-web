@@ -6,6 +6,7 @@ import {
 } from '@angular/fire/auth-guard';
 import { AuthPage, SignInPage, SignUpPage } from './auth/pages';
 import { HubPage } from './hub/pages';
+import { UpdateProfilePage, ViewProfilePage } from './hub-profile/pages';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'hub' },
@@ -25,6 +26,14 @@ export const routes: Routes = [
         component: HubPage,
         data: { authGuardPipe: () => redirectUnauthorizedTo('/auth') },
         canActivate: [AuthGuard],
-        children: [],
+        children: [
+            {
+                path: 'profile',
+                children: [
+                    { path: '', component: ViewProfilePage },
+                    { path: 'update', component: UpdateProfilePage },
+                ],
+            },
+        ],
     },
 ];

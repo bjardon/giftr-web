@@ -1,0 +1,27 @@
+<div class="d-flex mb-4">
+    <h2 class="mb-0 fw-normal text-body-secondary flex-grow-1">
+        Tu perfil de usuario
+    </h2>
+    <button type="button" class="btn btn-link-secondary" (click)="signOut()">
+        Cerrar sesión
+    </button>
+    <a class="btn btn-secondary" routerLink="/hub/profile/update">
+        Actualizar
+    </a>
+</div>
+<div class="card border-0 shadow-lg rounded-lg" *ngrxLet="user$ as user">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-2 text-end">
+                <strong>Correo electrónico</strong>
+            </div>
+            <div class="col">{{ user!.email }}</div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-end">
+                <strong>Nombre</strong>
+            </div>
+            <div class="col">{{ user!.name }}</div>
+        </div>
+    </div>
+</div>
