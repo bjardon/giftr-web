@@ -24,7 +24,7 @@ export class AuthRouterEffects {
         () => {
             return this.actions$.pipe(
                 ofType(AuthActions.signUpSuccess),
-                tap(() => this.router.navigate(['/hub'])), // TODO: redirect to complete profile route
+                tap(() => this.router.navigate(['/hub/profile/update'])),
             );
         },
         { dispatch: false },
