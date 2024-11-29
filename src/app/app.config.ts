@@ -3,6 +3,7 @@ import {
     provideZoneChangeDetection,
     isDevMode,
 } from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -20,8 +21,7 @@ export const appConfig: ApplicationConfig = {
         provideFirebaseApp(() => initializeApp(environment.firebaseOptions)),
         provideAuth(() => getAuth()),
         provideRouter(routes),
-        provideStore({ auth: AuthReducer }),
-        provideEffects([AuthEffects, AuthRouterEffects]),
+        provideHttpClient(withInterceptors([authTokenInterceptor])),
         provideRouterStore(),
         provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     ],
