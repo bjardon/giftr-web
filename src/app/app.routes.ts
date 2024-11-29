@@ -14,7 +14,6 @@ export const routes: Routes = [
         component: AuthPage,
         data: { authGuardPipe: () => redirectLoggedInTo('/hub') },
         canActivate: [AuthGuard],
-        // canActivateChild: [AuthGuard],
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'sign-in' },
             { path: 'sign-in', component: SignInPage },
