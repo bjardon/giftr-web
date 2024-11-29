@@ -1,0 +1,14 @@
+<div class="d-flex flex-column min-vh-100" *ngrxLet="user$ as user">
+    <div class="container py-5">
+        <div class="d-flex align-items-center mb-5">
+            <h1 class="fs-1 flex-grow-1 mb-0" routerLink="/hub">Giftr</h1>
+            <div
+                class="d-flex gap-1 flex-align-items-center"
+                routerLink="/hub/profile">
+                <i class="bi bi-person-circle"></i>
+                <span class="fw-bold"> {{ user!.name }} </span>
+            </div>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
