@@ -33,6 +33,13 @@ const signUpError = createAction(
     props<{ error: unknown }>(),
 );
 
+const refreshToken = createAction('[Auth] refreshToken');
+const refreshTokenSuccess = createAction('[Auth] refreshTokenSuccess');
+const refreshTokenError = createAction(
+    '[Auth] refreshTokenError',
+    props<{ error: unknown }>(),
+);
+
 const signOut = createAction('[Auth] signOut');
 const signOutSuccess = createAction('[Auth] signOutSuccess');
 const signOutError = createAction(
@@ -47,6 +54,9 @@ export const AuthActions = {
     signUp,
     signUpSuccess,
     signUpError,
+    refreshToken,
+    refreshTokenSuccess,
+    refreshTokenError,
     signOut,
     signOutSuccess,
     signOutError,
