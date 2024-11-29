@@ -4,11 +4,12 @@ import {
     redirectLoggedInTo,
     redirectUnauthorizedTo,
 } from '@angular/fire/auth-guard';
-import { SignInPage, SignUpPage } from './auth/pages';
+import { AuthPage, SignInPage, SignUpPage } from './auth/pages';
 
 export const routes: Routes = [
     {
         path: 'auth',
+        component: AuthPage,
         data: { authGuardPipe: () => redirectLoggedInTo('/hub') },
         canActivate: [AuthGuard],
         // canActivateChild: [AuthGuard],
