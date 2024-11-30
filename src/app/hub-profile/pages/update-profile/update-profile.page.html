@@ -1,0 +1,38 @@
+<div class="d-flex mb-4">
+    <h2 class="mb-0 fw-normal text-body-secondary flex-grow-1">
+        Actualizar perfil
+    </h2>
+    <a class="btn btn-link-secondary" routerLink="/hub/profile"> Regresar </a>
+</div>
+<div class="card border-0 shadow-lg rounded-lg">
+    <div class="card-body">
+        <p class="mb-4">
+            Actualiza tu perfil para personalizar tu experiencia.
+        </p>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="mb-4">
+                <div class="form-floating mb-3">
+                    <input
+                        formControlName="name"
+                        type="text"
+                        class="form-control"
+                        placeholder="Jane Doe" />
+                    <label for="name">Tu nombre</label>
+                </div>
+            </div>
+            <div
+                class="d-grid d-md-flex gap-3 justify-content-md-end align-items-center">
+                <p *ngrxLet="error$ as error" class="mb-0 text-danger">
+                    {{error}}
+                </p>
+                <button
+                    *ngrxLet="busy$ as busy"
+                    type="submit"
+                    class="btn btn-lg btn-primary px-5"
+                    [disabled]="busy">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
