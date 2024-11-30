@@ -7,6 +7,8 @@ import {
 import { AuthPage, SignInPage, SignUpPage } from './auth/pages';
 import { HubPage } from './hub/pages';
 import { UpdateProfilePage, ViewProfilePage } from './hub-profile/pages';
+import { HomePage } from './hub-home/pages';
+import { ViewExchangePage } from './hub-exchanges/pages';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'hub' },
@@ -27,6 +29,14 @@ export const routes: Routes = [
         data: { authGuardPipe: () => redirectUnauthorizedTo('/auth') },
         canActivate: [AuthGuard],
         children: [
+            { path: '', pathMatch: 'full', redirectTo: 'home' },
+            { path: 'home', component: HomePage },
+            {
+                path: 'exchanges',
+                children: [
+                    { path: ':exchangeId', component: ViewExchangePage },
+                ],
+            },
             {
                 path: 'profile',
                 children: [

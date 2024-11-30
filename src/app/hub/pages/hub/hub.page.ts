@@ -6,10 +6,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthActions } from '../../../auth/store';
 import { AuthService } from '../../../auth/services';
 import { UserSelectors } from '../../../user/store';
+import { CommonModule } from '@angular/common';
 
 @Component({
     standalone: true,
-    imports: [RouterModule, NgbModule, LetDirective],
+    imports: [CommonModule, RouterModule, NgbModule, LetDirective],
     templateUrl: './hub.page.html',
 })
 export class HubPage {

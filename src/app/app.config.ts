@@ -16,6 +16,13 @@ import { authTokenInterceptor } from '../interceptors';
 import { routes } from './app.routes';
 import { AuthReducer, AuthEffects, AuthRouterEffects } from './auth/store';
 import { UserEffects, UserReducer } from './user/store';
+import {
+    GiftExchangesReducer,
+    GiftExchangesEffects,
+    GiftExchangesRouterEffects,
+    ParticipantsReducer,
+    WishListItemsReducer,
+} from './gift-exchanges/store/';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -24,8 +31,20 @@ export const appConfig: ApplicationConfig = {
         provideAuth(() => getAuth()),
         provideRouter(routes),
         provideHttpClient(withInterceptors([authTokenInterceptor])),
-        provideStore({ auth: AuthReducer, user: UserReducer }),
-        provideEffects([AuthEffects, AuthRouterEffects, UserEffects]),
+        provideStore({
+            auth: AuthReducer,
+            user: UserReducer,
+            exchanges: GiftExchangesReducer,
+            participants: ParticipantsReducer,
+            wishListItems: WishListItemsReducer,
+        }),
+        provideEffects([
+            AuthEffects,
+            AuthRouterEffects,
+            UserEffects,
+            GiftExchangesEffects,
+            GiftExchangesRouterEffects,
+        ]),
         provideRouterStore(),
         provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     ],

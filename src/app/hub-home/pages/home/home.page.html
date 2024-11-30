@@ -1,0 +1,48 @@
+<div class="d-flex mb-4">
+    <h2 class="mb-0 fw-normal text-body-secondary flex-grow-1">
+        Tus intercambios
+    </h2>
+    <button
+        *ngrxLet="busy$ as busy"
+        class="btn btn-link-secondary btn-lg"
+        (click)="fetch()"
+        [disabled]="busy">
+        <i class="bi bi-arrow-clockwise"></i>
+    </button>
+</div>
+<div
+    *ngFor="let exchange of exchanges$ | async"
+    class="card bg-primary-subtle border-0 shadow-lg rounded-lg py-5 mb-5">
+    <div class="card-body">
+        <div
+            class="d-flex flex-column align-items-center justify-content-center">
+            <p class="fs-1 mb-3">{{ exchange.title }}</p>
+            <p class="fs-3 mb-4 text-body-secondary">
+                {{ exchange.scheduledOn | date }}
+            </p>
+            <a
+                class="btn btn-outline-secondary btn-lg"
+                [routerLink]="['/hub/exchanges/', exchange._id]"
+                >Ver más</a
+            >
+        </div>
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-4">
+        <h3 class="mb-4 fw-normal text-body-secondary flex-grow-1">
+            Your Invites
+        </h3>
+        <div class="card border-0 shadow-lg rounded-lg py-3">
+            <div class="card-body"></div>
+        </div>
+    </div>
+    <div class="col-8">
+        <h3 class="mb-4 fw-normal text-body-secondary flex-grow-1">
+            Your Secret Santas
+        </h3>
+        <div class="card border-0 shadow-lg rounded-lg py-3">
+            <div class="card-body"></div>
+        </div>
+    </div>
+</div> -->
