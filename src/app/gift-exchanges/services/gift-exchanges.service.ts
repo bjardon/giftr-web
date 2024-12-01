@@ -39,6 +39,17 @@ export class GiftExchangesService {
         );
     }
 
+    fetchOwnGiftee(exchangeId: string): Observable<ParticipantEntity> {
+        return this.http.get<ParticipantEntity>(
+            generateApiPath([
+                'gift-exchanges',
+                exchangeId,
+                'participants',
+                'giftee',
+            ]),
+        );
+    }
+
     acknowledgeSelf(exchangeId: string): Observable<ParticipantEntity> {
         return this.http.patch<ParticipantEntity>(
             generateApiPath([

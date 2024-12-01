@@ -8,7 +8,12 @@ import { AuthPage, SignInPage, SignUpPage } from './auth/pages';
 import { HubPage } from './hub/pages';
 import { UpdateProfilePage, ViewProfilePage } from './hub-profile/pages';
 import { HomePage } from './hub-home/pages';
-import { ViewExchangePage } from './hub-exchanges/pages';
+import {
+    ViewExchangeGifteePage,
+    ViewExchangePage,
+    ViewExchangeSelfPage,
+    ViewExchangeSummaryPage,
+} from './hub-exchanges/pages';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'hub' },
@@ -34,7 +39,26 @@ export const routes: Routes = [
             {
                 path: 'exchanges',
                 children: [
-                    { path: ':exchangeId', component: ViewExchangePage },
+                    {
+                        path: ':exchangeId',
+                        component: ViewExchangePage,
+                        children: [
+                            {
+                                path: '',
+                                pathMatch: 'full',
+                                redirectTo: 'summary',
+                            },
+                            {
+                                path: 'summary',
+                                component: ViewExchangeSummaryPage,
+                            },
+                            { path: 'self', component: ViewExchangeSelfPage },
+                            {
+                                path: 'giftee',
+                                component: ViewExchangeGifteePage,
+                            },
+                        ],
+                    },
                 ],
             },
             {

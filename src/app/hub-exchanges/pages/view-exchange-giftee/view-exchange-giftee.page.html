@@ -1,0 +1,63 @@
+<div *ngrxLet="giftee$ as giftee" class="row">
+    <div class="col-md-4">
+        <h3 class="mb-3 fw-normal text-body-secondary">Mi destinatario</h3>
+        <div class="card border-0 shadow-lg rounded-lg mb-4">
+            <div class="card-body text-center">
+                <small>Tu destinatario es</small>
+                <p class="fs-2 fw-bold mb-0">{{ giftee?.user?.name }}</p>
+            </div>
+        </div>
+        <h3 class="mb-3 fw-normal text-body-secondary">
+            La dirección de mi destinatario
+        </h3>
+        <div class="card border-0 shadow-lg rounded-lg mb-4">
+            <div class="card-body">
+                <p>
+                    {{giftee?.user?.name}} dejó esta dirección en caso de que
+                    prefieras enviar sus regalos a su casa.
+                </p>
+                <div class="d-flex">
+                    <span class="fs-5 flex-grow-1">{{giftee?.address}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h3 class="mb-3 fw-normal text-body-secondary">
+            La wishlist de mi destinatario
+        </h3>
+        <div class="card border-0 shadow-lg rounded-lg mb-4">
+            <div class="card-body">
+                <ul class="list-group mb-3">
+                    <li
+                        *ngIf="!giftee?.wishList"
+                        class="list-group-item list-group-item-action border-0 text-center">
+                        Esta lista está vacía.
+                    </li>
+                    <li
+                        *ngFor="let item of giftee?.wishList"
+                        class="list-group-item list-group-item-action border-0">
+                        <div class="d-flex gap-3">
+                            <i class="bi bi-gift fs-1"></i>
+                            <div
+                                class="d-flex flex-column justify-content-center flex-grow-1">
+                                <span class="fs-5">{{item.name}}</span>
+                                <small>
+                                    <a
+                                        *ngIf="isLink(item.linkOrStore)"
+                                        [href]="item.linkOrStore"
+                                        >{{item.linkOrStore}}</a
+                                    >
+                                    <ng-container
+                                        *ngIf="!isLink(item.linkOrStore)"
+                                        >{{item.linkOrStore}}</ng-container
+                                    >
+                                </small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

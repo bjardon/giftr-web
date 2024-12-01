@@ -52,6 +52,22 @@ export class GiftExchangesEffects {
         );
     });
 
+    patchSelf$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ParticipantsActions.patchSelf),
+            switchMap(({ participantId, data }) =>
+                this.participants.patchSelf(participantId, data).pipe(
+                    map((participant) =>
+                        ParticipantsActions.patchSelfSuccess({ participant }),
+                    ),
+                    catchError((error) =>
+                        of(ParticipantsActions.patchSelfError({ error })),
+                    ),
+                ),
+            ),
+        );
+    });
+
     acknowledgeSelf$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ParticipantsActions.acknowledgeSelf),
@@ -75,11 +91,27 @@ export class GiftExchangesEffects {
             ofType(ParticipantsActions.fetchSelf),
             switchMap(({ exchangeId }) =>
                 this.giftExchanges.fetchSelfParticipant(exchangeId).pipe(
-                    map((participant) =>
-                        ParticipantsActions.fetchSelfSuccess({ participant }),
+                    map((self) =>
+                        ParticipantsActions.fetchSelfSuccess({ self }),
                     ),
                     catchError((error) =>
                         of(ParticipantsActions.fetchSelfError({ error })),
+                    ),
+                ),
+            ),
+        );
+    });
+
+    fetchOwnGiftee$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ParticipantsActions.fetchOwnGiftee),
+            switchMap(({ exchangeId }) =>
+                this.giftExchanges.fetchOwnGiftee(exchangeId).pipe(
+                    map((giftee) =>
+                        ParticipantsActions.fetchOwnGifteeSuccess({ giftee }),
+                    ),
+                    catchError((error) =>
+                        of(ParticipantsActions.fetchOwnGifteeError({ error })),
                     ),
                 ),
             ),
@@ -141,6 +173,7 @@ export class GiftExchangesEffects {
                 of(
                     ParticipantsActions.fetch({ exchangeId }),
                     ParticipantsActions.fetchSelf({ exchangeId }),
+                    ParticipantsActions.fetchOwnGiftee({ exchangeId }),
                 ),
             ),
         );
@@ -149,7 +182,7 @@ export class GiftExchangesEffects {
     fetchWishListOnSelfFetch$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ParticipantsActions.fetchSelfSuccess),
-            map(({ participant }) =>
+            map(({ self: participant }) =>
                 WishListItemsActions.fetch({ participantId: participant._id }),
             ),
         );
