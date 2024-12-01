@@ -25,6 +25,7 @@ export const giftExchangesInitialState = (): GiftExchangesState =>
 
 export interface ParticipantsState extends EntityState<ParticipantEntity> {
     self: ParticipantEntity | null;
+    giftee: ParticipantEntity | null;
     busy: boolean;
     error: unknown | null;
 }
@@ -37,6 +38,7 @@ export const participantsAdapter: EntityAdapter<ParticipantEntity> =
 export const participantsInitialState = (): ParticipantsState =>
     participantsAdapter.getInitialState({
         self: null,
+        giftee: null,
         busy: false,
         error: null,
     });

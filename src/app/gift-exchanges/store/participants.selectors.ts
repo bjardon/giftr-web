@@ -15,6 +15,7 @@ const total = createSelector(selectParticipants, selectTotal);
 const busy = createSelector(selectParticipants, (state) => state.busy);
 const error = createSelector(selectParticipants, (state) => state.error);
 const self = createSelector(selectParticipants, (state) => state.self);
+const giftee = createSelector(selectParticipants, (state) => state.giftee);
 
 export const ParticipantsSelectors = {
     ids,
@@ -24,4 +25,5 @@ export const ParticipantsSelectors = {
     busy,
     error,
     self,
+    giftee,
 };
