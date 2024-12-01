@@ -19,7 +19,7 @@
                 >Mi wishlist</a
             >
         </li>
-        <li class="nav-item">
+        <li *ngIf="exchange?.drawnOn" class="nav-item">
             <a
                 class="nav-link"
                 [routerLink]="['/hub/exchanges', exchange!._id, 'giftee']"
