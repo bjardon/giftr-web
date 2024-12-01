@@ -1,15 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WishListItemEntity } from '../entities';
+import { ParticipantEntity, WishListItemEntity } from '../entities';
 import { generateApiPath } from '../../../utils';
-import { CreateWishListItemDto } from '../dtos';
+import { CreateWishListItemDto, UpdateParticipantDto } from '../dtos';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ParticipantsService {
     private readonly http = inject(HttpClient);
+
+    patchSelf(
+        participantId: string,
+        data: UpdateParticipantDto,
+    ): Observable<ParticipantEntity> {
+        return this.http.patch<ParticipantEntity>(
+            generateApiPath(['participants', participantId]),
+            data,
+        );
+    }
 
     fetchWishListItems(
         participantId: string,

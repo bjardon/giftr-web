@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ParticipantEntity } from '../entities';
+import { UpdateParticipantDto } from '../dtos';
 
 const fetch = createAction(
     '[Participants] fetch',
@@ -20,10 +21,36 @@ const fetchSelf = createAction(
 );
 const fetchSelfSuccess = createAction(
     '[Participants] fetchSelfSuccess',
-    props<{ participant: ParticipantEntity }>(),
+    props<{ self: ParticipantEntity }>(),
 );
 const fetchSelfError = createAction(
     '[Participants] fetchSelfError',
+    props<{ error: unknown }>(),
+);
+
+const fetchOwnGiftee = createAction(
+    '[Participants] fetchOwnGiftee',
+    props<{ exchangeId: string }>(),
+);
+const fetchOwnGifteeSuccess = createAction(
+    '[Participants] fetchOwnGifteeSuccess',
+    props<{ giftee: ParticipantEntity }>(),
+);
+const fetchOwnGifteeError = createAction(
+    '[Participants] fetchSelfError',
+    props<{ error: unknown }>(),
+);
+
+const patchSelf = createAction(
+    '[Participants] patchSelf',
+    props<{ participantId: string; data: UpdateParticipantDto }>(),
+);
+const patchSelfSuccess = createAction(
+    '[Participants] patchSelfSuccess',
+    props<{ participant: ParticipantEntity }>(),
+);
+const patchSelfError = createAction(
+    '[Participants] patchSelfError',
     props<{ error: unknown }>(),
 );
 
@@ -47,6 +74,12 @@ export const ParticipantsActions = {
     fetchSelf,
     fetchSelfSuccess,
     fetchSelfError,
+    fetchOwnGiftee,
+    fetchOwnGifteeSuccess,
+    fetchOwnGifteeError,
+    patchSelf,
+    patchSelfSuccess,
+    patchSelfError,
     acknowledgeSelf,
     acknowledgeSelfSuccess,
     acknowledgeSelfError,

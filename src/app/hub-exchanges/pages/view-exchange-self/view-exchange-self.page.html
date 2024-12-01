@@ -1,0 +1,129 @@
+<div *ngrxLet="self$ as self" class="row">
+    <div class="col-md-4">
+        <h3 class="mb-3 fw-normal text-body-secondary">Mi dirección</h3>
+        <div
+            *ngrxLet="self$ as self"
+            class="card border-0 shadow-lg rounded-lg mb-4">
+            <div class="card-body">
+                <p>
+                    Agrega una dirección postal para recibir tus regalos en la
+                    puerta de tu casa.
+                </p>
+                <div class="d-flex" *ngIf="self?.address && !editAddress">
+                    <span class="fs-5 flex-grow-1">{{self?.address}}</span>
+                    <button
+                        class="btn btn-link-danger btn-sm"
+                        (click)="editAddress = true">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                </div>
+                <form
+                    *ngIf="!self?.address || editAddress"
+                    [formGroup]="addressForm"
+                    class="d-flex gap-3 align-items-center"
+                    (ngSubmit)="updateAddress(self?._id ?? '')">
+                    <div class="form-floating flex-grow-1">
+                        <input
+                            formControlName="address"
+                            type="text"
+                            class="form-control"
+                            placeholder="Dirección postal" />
+                        <label for="address">Dirección</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <ng-container *ngIf="!self?.acknowledgedOn">
+            <h3 class="mb-3 fw-normal text-body-secondary">
+                Confirma tu participación!
+            </h3>
+            <div
+                class="card bg-warning-subtle border-0 shadow-lg rounded-lg mb-4">
+                <div class="card-body text-center">
+                    <p class="fs-3 mb-3">No has confirmado tu participación!</p>
+                    <p class="text-body-secondary">
+                        Hazlo ahora mismo para poder comezar tu wishlist
+                    </p>
+                    <button
+                        *ngrxLet="exchange$ as exchange"
+                        type="button"
+                        class="btn btn-outline-secondary btn-lg"
+                        (click)="acknowledge(exchange?._id ?? '')">
+                        Quiero participar!
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="self?.acknowledgedOn">
+            <h3 class="mb-3 fw-normal text-body-secondary">Mi wishlist</h3>
+            <div class="card border-0 shadow-lg rounded-lg mb-4">
+                <div class="card-body">
+                    <form
+                        [formGroup]="wishListForm"
+                        class="d-flex gap-3 align-items-center mb-3"
+                        (ngSubmit)="addToWishList(self?._id ?? '')">
+                        <div class="form-floating flex-grow-1">
+                            <input
+                                formControlName="name"
+                                type="text"
+                                class="form-control"
+                                placeholder="Quiero que me regalen..." />
+                            <label for="name">Regalo</label>
+                        </div>
+                        <div class="form-floating flex-grow-1">
+                            <input
+                                formControlName="linkOrStore"
+                                type="text"
+                                class="form-control"
+                                placeholder="Se puede encontrar en..." />
+                            <label for="name">Link o tienda</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </form>
+                    <hr />
+                    <ul class="list-group mb-3">
+                        <li
+                            *ngIf="(wishListItemsCount$ | async) === 0"
+                            class="list-group-item list-group-item-action border-0 text-center">
+                            Tu lista está vacía.
+                        </li>
+                        <li
+                            *ngFor="let item of wishListItems$ | async"
+                            class="list-group-item list-group-item-action border-0">
+                            <div class="d-flex gap-3">
+                                <i class="bi bi-gift fs-1"></i>
+                                <div
+                                    class="d-flex flex-column justify-content-center flex-grow-1">
+                                    <span class="fs-5">{{item.name}}</span>
+                                    <small>
+                                        <a
+                                            *ngIf="isLink(item.linkOrStore)"
+                                            [href]="item.linkOrStore"
+                                            >{{item.linkOrStore}}</a
+                                        >
+                                        <ng-container
+                                            *ngIf="!isLink(item.linkOrStore)"
+                                            >{{item.linkOrStore}}</ng-container
+                                        >
+                                    </small>
+                                </div>
+                                <button
+                                    class="btn btn-link-danger btn-sm"
+                                    (click)="removeFromWishList(item._id)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -67,6 +67,15 @@ export const ParticipantsReducer = createReducer(
         }),
     ),
     on(
+        ParticipantsActions.fetchSuccess,
+        (state, { participants }): ParticipantsState =>
+            participantsAdapter.setAll(participants, {
+                ...state,
+                busy: false,
+                error: null,
+            }),
+    ),
+    on(
         ParticipantsActions.fetchSelf,
         (state): ParticipantsState => ({
             ...state,
@@ -83,21 +92,60 @@ export const ParticipantsReducer = createReducer(
     ),
     on(
         ParticipantsActions.fetchSelfSuccess,
-        (state, { participant }): ParticipantsState => ({
+        (state, { self }): ParticipantsState => ({
             ...state,
-            self: participant,
             busy: false,
             error: null,
+            self,
         }),
     ),
     on(
-        ParticipantsActions.fetchSuccess,
-        (state, { participants }): ParticipantsState =>
-            participantsAdapter.setAll(participants, {
-                ...state,
-                busy: false,
-                error: null,
-            }),
+        ParticipantsActions.fetchOwnGiftee,
+        (state): ParticipantsState => ({
+            ...state,
+            busy: true,
+        }),
+    ),
+    on(
+        ParticipantsActions.fetchOwnGifteeError,
+        (state, { error }): ParticipantsState => ({
+            ...state,
+            busy: false,
+            error,
+        }),
+    ),
+    on(
+        ParticipantsActions.fetchOwnGifteeSuccess,
+        (state, { giftee }): ParticipantsState => ({
+            ...state,
+            busy: false,
+            error: null,
+            giftee,
+        }),
+    ),
+    on(
+        ParticipantsActions.patchSelf,
+        (state): ParticipantsState => ({
+            ...state,
+            busy: true,
+        }),
+    ),
+    on(
+        ParticipantsActions.patchSelfError,
+        (state, { error }): ParticipantsState => ({
+            ...state,
+            busy: false,
+            error,
+        }),
+    ),
+    on(
+        ParticipantsActions.patchSelfSuccess,
+        (state, { participant }): ParticipantsState => ({
+            ...state,
+            busy: false,
+            error: null,
+            self: participant,
+        }),
     ),
     on(
         ParticipantsActions.acknowledgeSelf,

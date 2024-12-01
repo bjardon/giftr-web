@@ -4,6 +4,7 @@ import { WishListItemEntity } from './wish-list-item.entity';
 
 export interface ParticipantEntity {
     _id: string;
+    address: string;
     addedOn: string;
     acknowledgedOn: string;
     exchange: GiftExchangeEntity;
