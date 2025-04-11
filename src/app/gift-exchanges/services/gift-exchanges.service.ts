@@ -12,25 +12,35 @@ export class GiftExchangesService {
 
     fetchOwn(): Observable<GiftExchangeEntity[]> {
         return this.http.get<GiftExchangeEntity[]>(
-            generateApiPath(['gift-exchanges', 'own']),
+            generateApiPath(['gift-exchanges-api', 'gift-exchanges', 'own']),
         );
     }
 
     fetchParticipating(): Observable<GiftExchangeEntity[]> {
         return this.http.get<GiftExchangeEntity[]>(
-            generateApiPath(['gift-exchanges', 'participating']),
+            generateApiPath([
+                'gift-exchanges-api',
+                'gift-exchanges',
+                'participating',
+            ]),
         );
     }
 
     fetchParticipants(exchangeId: string): Observable<ParticipantEntity[]> {
         return this.http.get<ParticipantEntity[]>(
-            generateApiPath(['gift-exchanges', exchangeId, 'participants']),
+            generateApiPath([
+                'gift-exchanges-api',
+                'gift-exchanges',
+                exchangeId,
+                'participants',
+            ]),
         );
     }
 
     fetchSelfParticipant(exchangeId: string): Observable<ParticipantEntity> {
         return this.http.get<ParticipantEntity>(
             generateApiPath([
+                'gift-exchanges-api',
                 'gift-exchanges',
                 exchangeId,
                 'participants',
@@ -42,6 +52,7 @@ export class GiftExchangesService {
     fetchOwnGiftee(exchangeId: string): Observable<ParticipantEntity> {
         return this.http.get<ParticipantEntity>(
             generateApiPath([
+                'gift-exchanges-api',
                 'gift-exchanges',
                 exchangeId,
                 'participants',
@@ -53,6 +64,7 @@ export class GiftExchangesService {
     acknowledgeSelf(exchangeId: string): Observable<ParticipantEntity> {
         return this.http.patch<ParticipantEntity>(
             generateApiPath([
+                'gift-exchanges-api',
                 'gift-exchanges',
                 exchangeId,
                 'participants',
