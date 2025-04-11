@@ -16,7 +16,11 @@ export class ParticipantsService {
         data: UpdateParticipantDto,
     ): Observable<ParticipantEntity> {
         return this.http.patch<ParticipantEntity>(
-            generateApiPath(['participants', participantId]),
+            generateApiPath([
+                'gift-exchanges-api',
+                'participants',
+                participantId,
+            ]),
             data,
         );
     }
@@ -25,7 +29,12 @@ export class ParticipantsService {
         participantId: string,
     ): Observable<WishListItemEntity[]> {
         return this.http.get<WishListItemEntity[]>(
-            generateApiPath(['participants', participantId, 'wish-list-items']),
+            generateApiPath([
+                'gift-exchanges-api',
+                'participants',
+                participantId,
+                'wish-list-items',
+            ]),
         );
     }
 
@@ -34,14 +43,23 @@ export class ParticipantsService {
         data: CreateWishListItemDto,
     ): Observable<WishListItemEntity> {
         return this.http.post<WishListItemEntity>(
-            generateApiPath(['participants', participantId, 'wish-list-items']),
+            generateApiPath([
+                'gift-exchanges-api',
+                'participants',
+                participantId,
+                'wish-list-items',
+            ]),
             data,
         );
     }
 
     deleteWishListItem(wishListItemId: string): Observable<WishListItemEntity> {
         return this.http.delete<WishListItemEntity>(
-            generateApiPath(['wish-list-items', wishListItemId]),
+            generateApiPath([
+                'gift-exchanges-api',
+                'wish-list-items',
+                wishListItemId,
+            ]),
         );
     }
 }

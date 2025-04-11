@@ -12,12 +12,14 @@ export class UserService {
     private readonly http: HttpClient = inject(HttpClient);
 
     fetchUser(): Observable<UserEntity> {
-        return this.http.get<UserEntity>(generateApiPath(['users', 'self']));
+        return this.http.get<UserEntity>(
+            generateApiPath(['users-api', 'users', 'self']),
+        );
     }
 
     patchUser(data: PatchUserDto) {
         return this.http.patch<UserEntity>(
-            generateApiPath(['users', 'self']),
+            generateApiPath(['users-api', 'users', 'self']),
             data,
         );
     }
